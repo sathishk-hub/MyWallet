@@ -1,8 +1,12 @@
+import React, {Key} from 'react';
+
+import AppColors from '../utils/AppColors';
 import {ColorValue} from 'react-native';
+import Earn from '../pages/Earn';
 import Home from '../pages/Home';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
-import React from 'react';
 import {RootStackParams} from './RootStackParams';
+import Spent from '../pages/Spent';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator<RootStackParams>();
@@ -24,17 +28,23 @@ function BottomTab() {
     <Tab.Navigator
       screenOptions={({route}) => ({
         tabBarIcon: ({color, size}) => {
-          return {
-            Home: <Icon name={'home'} color={color} size={size} />,
-            Spent: (
-              <Icon name={'bank-transfer-out'} color={color} size={size} />
-            ),
-            Earn: <Icon name={'bank-transfer-in'} color={color} size={size} />,
-          }[route?.name];
+          const icons: {[key: string]: string} = {
+            Home: 'home',
+            Spent: 'bank-transfer-out',
+            Earn: 'bank-transfer-in',
+          };
+
+          return (
+            <Icon
+              name={icons[route.name].toString()}
+              color={color}
+              size={size}
+            />
+          );
         },
         headerShown: false,
-        tabBarActiveTintColor: '#2e7d32',
-        tabBarInactiveTintColor: '#424242',
+        tabBarActiveTintColor: AppColors.JapaneseLaurel,
+        tabBarInactiveTintColor: AppColors.Arsenic,
         tabBarLabelPosition: 'beside-icon',
         tabBarLabelStyle: {
           fontSize: 18,
@@ -42,8 +52,8 @@ function BottomTab() {
         },
       })}>
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Spent" component={Home} />
-      <Tab.Screen name="Earn" component={Home} />
+      <Tab.Screen name="Spent" component={Spent} />
+      <Tab.Screen name="Earn" component={Earn} />
     </Tab.Navigator>
   );
 }
