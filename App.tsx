@@ -1,7 +1,7 @@
 import AppRoutes from './src/routes';
 import React from 'react';
 
-function App() {
+function App(): JSX.Element {
   return <AppRoutes />;
 }
 
