@@ -51,28 +51,6 @@ function Register(): JSX.Element {
             }}>
             Sign Up
           </Button>
-          <Text style={{marginTop: AppSize.hs(50)}}> or Login With</Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              backgroundColor: Colors.orange50,
-              alignItems: 'center',
-              width: AppSize.hs(200),
-              borderRadius: AppSize.hs(10),
-              marginTop: AppSize.hs(10),
-              borderColor: Colors.orange800,
-              borderWidth: AppSize.hs(1),
-            }}>
-            <IconButton
-              icon="google"
-              color={Colors.orange900}
-              size={AppSize.hs(30)}
-              onPress={() => {
-                Firebase.onGoogleSignin();
-              }}
-            />
-          </View>
         </View>
       </View>
     </SafeAreaView>
