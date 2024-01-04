@@ -1,4 +1,4 @@
-import {Button, TextInput} from 'react-native-paper';
+import {Button, Colors, TextInput} from 'react-native-paper';
 import {StyleSheet, Text, View} from 'react-native';
 
 import AppColors from '../../utils/AppColors';
@@ -13,6 +13,7 @@ const iStyles = StyleSheet.create({
   surface: {
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: Colors.green50,
   },
   loginBtn: {marginTop: AppSize.vs(25), alignItems: 'center'},
 });
