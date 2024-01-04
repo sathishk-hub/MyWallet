@@ -1,8 +1,11 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {type RootStackParams} from './RootStackParams';
 import BottomTab from './BottomTab';
-import Login from '../pages/Login';
+import Login from '../pages/onboarding/Login';
+import Onboard from '../pages/onboarding/Onboard';
+import Register from '../pages/onboarding/Register';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
 const Stack = createStackNavigator<RootStackParams>();
 
@@ -12,15 +15,33 @@ const routes: Array<React.ComponentProps<typeof Stack.Screen>> = [
     component: BottomTab,
   },
   {
+    name: 'Onboard',
+    component: Onboard,
+  },
+  {
     name: 'Login',
     component: Login,
+  },
+  {
+    name: 'Register',
+    component: Register,
   },
 ];
 
 function RootStack(): JSX.Element {
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
+  const onAuthState = async () => {
+    auth().onAuthStateChanged(userState => {
+      setUser(userState);
+    });
+  };
+  useEffect(() => {
+    onAuthState();
+  }, []);
+
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName={user ? 'BottomTab' : 'Onboard'}
       screenOptions={{
         headerShown: false,
       }}>

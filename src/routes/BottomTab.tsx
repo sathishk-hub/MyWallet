@@ -1,10 +1,9 @@
-import React, {Key} from 'react';
-
 import AppColors from '../utils/AppColors';
 import {ColorValue} from 'react-native';
 import Earn from '../pages/Earn';
 import Home from '../pages/Home';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React from 'react';
 import {RootStackParams} from './RootStackParams';
 import Spent from '../pages/Spent';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
