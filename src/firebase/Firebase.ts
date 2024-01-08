@@ -46,7 +46,7 @@ async function onGoogleSignin() {
 
 const getCurrentUser = () => {
   try {
-    return auth().currentUser?.uid;
+    return auth().currentUser;
   } catch (error) {}
 };
 
@@ -62,10 +62,11 @@ const saveData = ({data}: {data: wallet[]}) => {
       const fields = {
         ...item,
         createdAt: firestore.FieldValue.serverTimestamp(),
-       
+        userId: getCurrentUser()?.uid,
       };
-      return walletDB.add(fields);
+      walletDB.add(fields);
     });
+    return true;
   } catch (e) {
     console.log(e);
   }

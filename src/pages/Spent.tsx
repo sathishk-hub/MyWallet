@@ -1,5 +1,13 @@
 import {Button, Chip, Text, TextInput} from 'react-native-paper';
-import {FlatList, Pressable, ScrollView, View} from 'react-native';
+import {
+  FlatList,
+  GestureResponderEvent,
+  Keyboard,
+  KeyboardAvoidingView,
+  Pressable,
+  ScrollView,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {customEnter, wallet} from '../types/Types';
 
@@ -11,9 +19,8 @@ import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 function Spent(): JSX.Element {
   const [data, setData] = useState<[]>();
   const [generatedItem, setGeneratedItem] = useState<Array<wallet>>([]);
-  const [customData, setcustomData] = useState<customEnter>({});
-  const userId = Firebase.getCurrentUser();
-
+  const [customData, setCustomData] = useState<customEnter>({});
+ 
 
   useEffect(() => {
     const subscriber = Firebase.optionDB.onSnapshot({
@@ -38,7 +45,9 @@ function Spent(): JSX.Element {
     }
   };
   return (
-    <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+    <ScrollView
+      keyboardShouldPersistTaps={'always'}
+      style={{flex: 1, backgroundColor: 'white'}}>
       <FlatList
         ListHeaderComponent={
           <Text style={{fontWeight: 'bold'}}>Select any Options</Text>
@@ -71,11 +80,9 @@ function Spent(): JSX.Element {
                   type: 'debit',
                   position: generatedItem.length,
                   amount: 0,
-                  userId,
+                  
                 },
               ]);
-
-              console.log(generatedItem)
             }}>
             {item}
           </Chip>
@@ -104,7 +111,7 @@ function Spent(): JSX.Element {
             activeOutlineColor={AppColors.JapaneseLaurel}
             placeholder="Enter custom service name"
             onChangeText={service => {
-              setcustomData({service});
+              setCustomData({service});
             }}
           />
 
@@ -117,7 +124,7 @@ function Spent(): JSX.Element {
             activeOutlineColor={AppColors.JapaneseLaurel}
             placeholder="Enter Amount"
             onChangeText={amount => {
-              setcustomData({...customData, amount: Number(amount)});
+              setCustomData({...customData, amount: Number(amount)});
             }}
           />
         </View>
@@ -133,10 +140,9 @@ function Spent(): JSX.Element {
                 type: 'debit',
                 position: generatedItem.length,
                 amount: customData.amount,
-                userId,
               },
             ]);
-            setcustomData({});
+            setCustomData({});
           }}>
           ADD
         </Button>
@@ -193,15 +199,31 @@ function Spent(): JSX.Element {
             );
           })}
 
-          <Button
-            style={{marginHorizontal: 65, marginVertical: AppSize.hs(30)}}
-            color={AppColors.JapaneseLaurel}
-            mode="contained"
+          <Pressable
+            style={{
+              marginHorizontal: 65,
+              marginVertical: AppSize.hs(30),
+              backgroundColor: AppColors.JapaneseLaurel,
+              borderRadius: 4,
+              padding: 8,
+              alignItems: 'center',
+            }}
             onPress={() => {
-              Firebase.saveData({data: generatedItem});
+              const res = Firebase.saveData({data: generatedItem});
+              if (res) {
+                setCustomData({});
+                setGeneratedItem([]);
+              }
             }}>
-            Submit
-          </Button>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+                color: 'white',
+              }}>
+              Submit
+            </Text>
+          </Pressable>
         </View>
       )}
     </ScrollView>

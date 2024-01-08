@@ -5,8 +5,9 @@ import {Text} from 'react-native-paper';
 import {wallet} from '../types/Types';
 
 function Home(): JSX.Element {
-  const [data, setData] = useState<wallet[]>([]);
-  const userId = Firebase.getCurrentUser();
+  const [spentData, setSpentData] = useState<wallet[]>([]);
+  const [earnData, setEarnData] = useState<wallet[]>([]);
+  const userId = Firebase.getCurrentUser()?.uid;
   useEffect(() => {
     const subscriber = Firebase.walletDB.onSnapshot({
       next: snapshot => {
@@ -14,7 +15,10 @@ function Home(): JSX.Element {
         snapshot.forEach(data => {
           result.push({...data.data(), docId: data.id});
         });
-        setData(result.filter(i => i.userId == userId));
+        setSpentData(result.filter(i => i.userId == userId && i.type==='debit'));
+        setEarnData(
+          result.filter(i => i.userId == userId && i.type === 'credit'),
+        );
       },
     });
 
@@ -24,13 +28,12 @@ function Home(): JSX.Element {
 
   const getTotal = () => {
     var total = 0;
-    data.forEach(item => {
+   spentData.forEach(item => {
       if (item.amount) total += item.amount;
     });
 
     return total;
   };
-  console.log(data);
   return (
     <Text style={{flex: 0.1, fontSize: 16, fontWeight: 'bold'}}>
       {getTotal()}
