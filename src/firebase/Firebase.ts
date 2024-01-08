@@ -1,6 +1,8 @@
+import {User, wallet} from '../types/Types';
+
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {User} from '../types/Types';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const create = async (user: User) => {
   try {
@@ -10,9 +12,9 @@ const create = async (user: User) => {
   }
 };
 
-const signin = async (user: User) => {
+const signin = async (user: User): Promise<any> => {
   try {
-    await auth().signInWithEmailAndPassword(user.email, user.password);
+    return await auth().signInWithEmailAndPassword(user.email, user.password);
   } catch (e) {
     console.log(e);
   }
@@ -25,25 +27,75 @@ const logout = async () => {
   }
 };
 
-
-
-
 async function onGoogleSignin() {
-  // Check if your device supports Google Play
-  await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-  // Get the users ID token
-  const {idToken} = await GoogleSignin.signIn();
+  try {
+    // Check if your device supports Google Play
+    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+    // Get the users ID token
+    const {idToken} = await GoogleSignin.signIn();
 
-  // Create a Google credential with the token
-  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-  // Sign-in the user with the credential
-  return auth().signInWithCredential(googleCredential);
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(googleCredential);
+  } catch (e) {
+    console.log(e);
+  }
 }
+
+const getCurrentUser = () => {
+  try {
+    return auth().currentUser?.uid;
+  } catch (error) {}
+};
+
+const walletDoc = 'myWallet';
+const optionDoc = 'options';
+
+const walletDB = firestore().collection(walletDoc);
+const optionDB = firestore().collection(optionDoc);
+
+const saveData = ({data}: {data: wallet[]}) => {
+  try {
+    data.forEach(item => {
+      const fields = {
+        ...item,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+       
+      };
+      return walletDB.add(fields);
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const updateData = ({docId, data}: {docId: string; data: wallet}) => {
+  try {
+    return walletDB.doc(docId).update(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const deleteData = ({docId}: {docId: string}) => {
+  try {
+    return walletDB.doc(docId).delete();
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 export default {
   createUser: create,
   signin,
   logout,
   onGoogleSignin,
+  getCurrentUser,
+  walletDB,
+  optionDB,
+  saveData,
+  updateData,
+  deleteData,
 };

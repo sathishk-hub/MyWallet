@@ -1,5 +1,5 @@
 import {Button, Colors, IconButton, Text, TextInput} from 'react-native-paper';
-import {StyleSheet, View} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 
 import AppColors from '../../utils/AppColors';
 import AppSize from '../../utils/AppSize';
@@ -22,7 +22,7 @@ const sigin = (user: User) => {
   Firebase.signin(user);
 };
 
-function Login(): JSX.Element {
+function Login({navigation}: any): JSX.Element {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -54,7 +54,10 @@ function Login(): JSX.Element {
             Login
           </Button>
           <Text style={{marginTop: AppSize.hs(50)}}> or Login With</Text>
-          <View
+          <Pressable
+            onPress={() => {
+              Firebase.onGoogleSignin();
+            }}
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
@@ -74,7 +77,7 @@ function Login(): JSX.Element {
                 Firebase.onGoogleSignin();
               }}
             />
-          </View>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>
