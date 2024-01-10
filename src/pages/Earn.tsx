@@ -1,4 +1,4 @@
-import {Button, Chip, Text, TextInput} from 'react-native-paper';
+import {Button, Chip, Colors, Text, TextInput} from 'react-native-paper';
 import {
   FlatList,
   GestureResponderEvent,
@@ -17,41 +17,18 @@ import Firebase from '../firebase/Firebase';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
 function Earn(): JSX.Element {
-  const [data, setData] = useState<[]>();
   const [generatedItem, setGeneratedItem] = useState<Array<wallet>>([]);
-  const [customData, setCustomData] = useState<customEnter>({});
+  const [customData, setCustomData] = useState<customEnter>({
+    service: 'Salary',
+  });
 
-  useEffect(() => {
-    const subscriber = Firebase.optionDB.onSnapshot({
-      next: snapshot => {
-        var result: FirebaseFirestoreTypes.DocumentData = [];
-        snapshot.forEach(data => {
-          result.push(data.data());
-        });
-        setData(result[0]?.options);
-      },
-    });
-
-    // Unsubscribe from events when no longer in use
-    return () => subscriber();
-  }, []);
-
-  const handleRemoveItem = (position?: number) => {
-    if (position != -1) {
-      setGeneratedItem(
-        generatedItem.filter((item, index) => index !== position),
-      );
-    }
-  };
   return (
     <ScrollView
       keyboardShouldPersistTaps={'always'}
       style={{flex: 1, backgroundColor: 'white'}}>
-      
-
       <View style={{margin: AppSize.hs(20)}}>
         <Text style={{flex: 0.7, fontWeight: 'bold'}}>
-          {'Enter Custom  Services'}
+          {'Enter Custom  Name'}
         </Text>
 
         <View
@@ -63,12 +40,12 @@ function Earn(): JSX.Element {
           }}>
           <TextInput
             mode="outlined"
-            label="Service"
+            label="Name"
             keyboardType="numeric"
             style={{flex: 1, marginHorizontal: 5}}
-            value={customData.service || ''}
+            value={customData.service}
             activeOutlineColor={AppColors.JapaneseLaurel}
-            placeholder="Enter custom service name"
+            placeholder="Enter custom  name"
             onChangeText={service => {
               setCustomData({service});
             }}
@@ -89,19 +66,22 @@ function Earn(): JSX.Element {
         </View>
         <Button
           style={{marginHorizontal: 65, marginVertical: AppSize.hs(20)}}
-          color={AppColors.JapaneseLaurel}
+          color={Colors.amber200}
+        
           mode="contained"
           onPress={() => {
-            setGeneratedItem([
-              ...generatedItem,
-              {
-                service: customData.service,
-                type: 'credit',
-                position: generatedItem.length,
-                amount: customData.amount,
-              },
-            ]);
-            setCustomData({});
+            if (customData.service && customData.amount) {
+              setGeneratedItem([
+                ...generatedItem,
+                {
+                  service: customData.service,
+                  type: 'credit',
+                  position: generatedItem.length,
+                  amount: customData.amount,
+                },
+              ]);
+              setCustomData({});
+            }
           }}>
           ADD
         </Button>
@@ -148,7 +128,7 @@ function Earn(): JSX.Element {
                   style={{flex: 1}}
                   value={String(generatedItem[index]?.amount || '')}
                   activeOutlineColor={AppColors.JapaneseLaurel}
-                  placeholder="Enter your username"
+                  placeholder="Enter amount"
                   onChangeText={amount => {
                     generatedItem[index].amount = Number(amount);
                     setGeneratedItem([...generatedItem]);

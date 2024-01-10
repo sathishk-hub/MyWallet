@@ -17,4 +17,11 @@ export type wallet = {
   type?: string;
   userId?: string;
   docId?: string;
+  createdMonth?: string;
+};
+
+
+export type chartData = {
+ spentData:wallet[];
+ earnData:wallet[]
 };

@@ -62,6 +62,9 @@ const saveData = ({data}: {data: wallet[]}) => {
       const fields = {
         ...item,
         createdAt: firestore.FieldValue.serverTimestamp(),
+        createdMonth: new Date(Date.now()).toLocaleString('en-US', {
+          month: 'long',
+        }),
         userId: getCurrentUser()?.uid,
       };
       walletDB.add(fields);

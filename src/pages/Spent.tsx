@@ -1,4 +1,4 @@
-import {Button, Chip, Text, TextInput} from 'react-native-paper';
+import {Button, Chip, IconButton, Text, TextInput} from 'react-native-paper';
 import {
   FlatList,
   GestureResponderEvent,
@@ -20,7 +20,6 @@ function Spent(): JSX.Element {
   const [data, setData] = useState<[]>();
   const [generatedItem, setGeneratedItem] = useState<Array<wallet>>([]);
   const [customData, setCustomData] = useState<customEnter>({});
- 
 
   useEffect(() => {
     const subscriber = Firebase.optionDB.onSnapshot({
@@ -49,10 +48,11 @@ function Spent(): JSX.Element {
       keyboardShouldPersistTaps={'always'}
       style={{flex: 1, backgroundColor: 'white'}}>
       <FlatList
+        keyboardShouldPersistTaps={'always'}
         ListHeaderComponent={
           <Text style={{fontWeight: 'bold'}}>Select any Options</Text>
         }
-        ListHeaderComponentStyle={{marginVertical: 15}}
+        ListHeaderComponentStyle={{marginVertical: 10}}
         style={{marginHorizontal: AppSize.hs(25), flex: 1}}
         data={data}
         numColumns={2}
@@ -61,7 +61,7 @@ function Spent(): JSX.Element {
           <Chip
             key={index}
             style={{
-              margin: 5,
+              margin: 4,
               flex: 1,
               borderColor: AppColors.JapaneseLaurel,
               borderWidth: 1,
@@ -80,7 +80,6 @@ function Spent(): JSX.Element {
                   type: 'debit',
                   position: generatedItem.length,
                   amount: 0,
-                  
                 },
               ]);
             }}>
@@ -90,9 +89,13 @@ function Spent(): JSX.Element {
         keyExtractor={item => item}
       />
 
-      <View style={{margin: AppSize.hs(20)}}>
+      <View
+        style={{
+          margin: AppSize.vs(10),
+          marginLeft: AppSize.hs(20),
+        }}>
         <Text style={{flex: 0.7, fontWeight: 'bold'}}>
-          {'Enter Custom  Services'}
+          {'Enter Custom  Name'}
         </Text>
 
         <View
@@ -104,12 +107,12 @@ function Spent(): JSX.Element {
           }}>
           <TextInput
             mode="outlined"
-            label="Service"
+            label="Name"
             keyboardType="numeric"
             style={{flex: 1, marginHorizontal: 5}}
             value={customData.service || ''}
             activeOutlineColor={AppColors.JapaneseLaurel}
-            placeholder="Enter custom service name"
+            placeholder="Enter custom name"
             onChangeText={service => {
               setCustomData({service});
             }}
@@ -127,25 +130,27 @@ function Spent(): JSX.Element {
               setCustomData({...customData, amount: Number(amount)});
             }}
           />
+          <IconButton
+            icon="plus"
+            size={20}
+            color={'white'}
+            style={{backgroundColor: AppColors.JapaneseLaurel, flex: 0.2}}
+            onPress={() => {
+              if (customData.amount && customData.service) {
+                setGeneratedItem([
+                  ...generatedItem,
+                  {
+                    service: customData.service,
+                    type: 'debit',
+                    position: generatedItem.length,
+                    amount: customData.amount,
+                  },
+                ]);
+                setCustomData({});
+              }
+            }}
+          />
         </View>
-        <Button
-          style={{marginHorizontal: 65, marginVertical: AppSize.hs(20)}}
-          color={AppColors.JapaneseLaurel}
-          mode="contained"
-          onPress={() => {
-            setGeneratedItem([
-              ...generatedItem,
-              {
-                service: customData.service,
-                type: 'debit',
-                position: generatedItem.length,
-                amount: customData.amount,
-              },
-            ]);
-            setCustomData({});
-          }}>
-          ADD
-        </Button>
       </View>
 
       {generatedItem.length > 0 && (
@@ -189,7 +194,7 @@ function Spent(): JSX.Element {
                   style={{flex: 1}}
                   value={String(generatedItem[index]?.amount || '')}
                   activeOutlineColor={AppColors.JapaneseLaurel}
-                  placeholder="Enter your username"
+                  placeholder="Enter amount"
                   onChangeText={amount => {
                     generatedItem[index].amount = Number(amount);
                     setGeneratedItem([...generatedItem]);
