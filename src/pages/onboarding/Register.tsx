@@ -1,4 +1,4 @@
-import {Button, Colors, IconButton, Text, TextInput} from 'react-native-paper';
+import {Button, Colors, TextInput} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 
 import AppColors from '../../utils/AppColors';

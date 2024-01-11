@@ -1,14 +1,5 @@
-import {Button, Chip, IconButton, Text, TextInput} from 'react-native-paper';
-import {
-  FlatList,
-  GestureResponderEvent,
-  Keyboard,
-  KeyboardAvoidingView,
-  Pressable,
-  ScrollView,
-  StatusBar,
-  View,
-} from 'react-native';
+import {Chip, IconButton, Text, TextInput} from 'react-native-paper';
+import {FlatList, Pressable, ScrollView, StatusBar, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {customEnter, wallet} from '../types/Types';
 

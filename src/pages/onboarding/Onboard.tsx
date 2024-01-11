@@ -1,9 +1,9 @@
-import {Button, Text} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 
 import AppColors from '../../utils/AppColors';
 import AppSize from '../../utils/AppSize';
 import AppStyles from '../../utils/AppStyles';
+import {Button} from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -38,7 +38,9 @@ function Onboard({navigation}: any): JSX.Element {
             color={AppColors.JapaneseLaurel}
             style={AppStyles.marginTop25}
             mode="contained"
-            onPress={() => {  navigation.navigate('Register');}}>
+            onPress={() => {
+              navigation.navigate('Register');
+            }}>
             Sign Up
           </Button>
         </View>

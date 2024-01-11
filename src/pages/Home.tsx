@@ -1,13 +1,11 @@
-import {Button, Colors, DataTable, Modal, Text} from 'react-native-paper';
+import {Colors, DataTable, Text} from 'react-native-paper';
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StatusBar, View} from 'react-native';
 
 import AppSize from '../utils/AppSize';
-import {Calendar} from 'react-native-calendars';
 import Firebase from '../firebase/Firebase';
 import Helper from '../utils/Helper';
 import SelectDropdown from 'react-native-select-dropdown';
-import firestore from '@react-native-firebase/firestore';
 import {wallet} from '../types/Types';
 
 function Table({data}: {data: wallet[]}): JSX.Element {

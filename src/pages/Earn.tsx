@@ -1,21 +1,11 @@
-import {Button, Chip, Colors, Text, TextInput} from 'react-native-paper';
-import {
-  FlatList,
-  GestureResponderEvent,
-  Keyboard,
-  KeyboardAvoidingView,
-  Pressable,
-  ScrollView,
-  StatusBar,
-  View,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {Button, Colors, Text, TextInput} from 'react-native-paper';
+import {Pressable, ScrollView, StatusBar, View} from 'react-native';
+import React, {useState} from 'react';
 import {customEnter, wallet} from '../types/Types';
 
 import AppColors from '../utils/AppColors';
 import AppSize from '../utils/AppSize';
 import Firebase from '../firebase/Firebase';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
 function Earn(): JSX.Element {
   const [generatedItem, setGeneratedItem] = useState<Array<wallet>>([]);
