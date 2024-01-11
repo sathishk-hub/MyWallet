@@ -39,10 +39,6 @@ function Table({data}: {data: wallet[]}): JSX.Element {
   );
 }
 
-function DateView(): JSX.Element {
-  return <></>;
-}
-
 function Home(): JSX.Element {
   const [spentData, setSpentData] = useState<wallet[]>([]);
   const [earnData, setEarnData] = useState<wallet[]>([]);

@@ -16,13 +16,24 @@ const iStyles = StyleSheet.create({
     backgroundColor: Colors.green50,
   },
   loginBtn: {marginTop: AppSize.vs(25), alignItems: 'center'},
+  iconBtn: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: Colors.orange50,
+    alignItems: 'center',
+    width: AppSize.hs(200),
+    borderRadius: AppSize.hs(10),
+    marginTop: AppSize.hs(10),
+    borderColor: Colors.orange800,
+    borderWidth: AppSize.hs(1),
+  },
 });
 
 const sigin = (user: User) => {
   Firebase.signin(user);
 };
 
-function Login({navigation}: any): JSX.Element {
+function Login(): JSX.Element {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -58,17 +69,7 @@ function Login({navigation}: any): JSX.Element {
             onPress={() => {
               Firebase.onGoogleSignin();
             }}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              backgroundColor: Colors.orange50,
-              alignItems: 'center',
-              width: AppSize.hs(200),
-              borderRadius: AppSize.hs(10),
-              marginTop: AppSize.hs(10),
-              borderColor: Colors.orange800,
-              borderWidth: AppSize.hs(1),
-            }}>
+            style={iStyles.iconBtn}>
             <IconButton
               icon="google"
               color={Colors.orange900}
