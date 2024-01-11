@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Pressable,
   ScrollView,
+  StatusBar,
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -47,6 +48,7 @@ function Spent(): JSX.Element {
     <ScrollView
       keyboardShouldPersistTaps={'always'}
       style={{flex: 1, backgroundColor: 'white'}}>
+      <StatusBar backgroundColor={'#fff'} barStyle={'dark-content'} />
       <FlatList
         keyboardShouldPersistTaps={'always'}
         ListHeaderComponent={

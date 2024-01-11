@@ -1,6 +1,6 @@
 import {Button, Colors, DataTable, Modal, Text} from 'react-native-paper';
 import React, {useEffect, useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, StatusBar, View} from 'react-native';
 
 import AppSize from '../utils/AppSize';
 import {Calendar} from 'react-native-calendars';
@@ -86,7 +86,7 @@ function Home(): JSX.Element {
     setDataTable([...sData, ...eData]);
     getSpentTotal(sData);
     getEarnTotal(eData);
-  }, [selectedMonth]);
+  }, [selectedMonth, spentData, earnData]);
 
   const getSpentTotal = (data: wallet[]) => {
     var total = 0;
@@ -109,6 +109,7 @@ function Home(): JSX.Element {
     <ScrollView
       keyboardShouldPersistTaps={'always'}
       style={{flex: 1, backgroundColor: 'white'}}>
+      <StatusBar backgroundColor={'#fff'} barStyle={'dark-content'} />
       <View
         style={{
           flex: 1,

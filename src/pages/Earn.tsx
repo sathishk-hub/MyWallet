@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Pressable,
   ScrollView,
+  StatusBar,
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -26,6 +27,7 @@ function Earn(): JSX.Element {
     <ScrollView
       keyboardShouldPersistTaps={'always'}
       style={{flex: 1, backgroundColor: 'white'}}>
+      <StatusBar backgroundColor={'#fff'} barStyle={'dark-content'} />
       <View style={{margin: AppSize.hs(20)}}>
         <Text style={{flex: 0.7, fontWeight: 'bold'}}>
           {'Enter Custom  Name'}
@@ -67,7 +69,6 @@ function Earn(): JSX.Element {
         <Button
           style={{marginHorizontal: 65, marginVertical: AppSize.hs(20)}}
           color={Colors.amber200}
-        
           mode="contained"
           onPress={() => {
             if (customData.service && customData.amount) {
