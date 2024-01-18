@@ -27,6 +27,12 @@ const iStyles = StyleSheet.create({
     borderColor: Colors.orange800,
     borderWidth: AppSize.hs(1),
   },
+  header: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginBottom: AppSize.vs(60),
+  },
 });
 
 const sigin = (user: User) => {
@@ -39,6 +45,7 @@ function Login(): JSX.Element {
 
   return (
     <SafeAreaView style={iStyles.surface}>
+      <Text style={iStyles.header}>My Wallet</Text>
       <View style={AppStyles.marginHorizontal25}>
         <TextInput
           mode="outlined"

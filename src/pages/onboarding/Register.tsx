@@ -1,4 +1,4 @@
-import {Button, Colors, TextInput} from 'react-native-paper';
+import {Button, Colors, Text, TextInput} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 
 import AppColors from '../../utils/AppColors';
@@ -16,6 +16,12 @@ const iStyles = StyleSheet.create({
     backgroundColor: Colors.green50,
   },
   loginBtn: {marginTop: AppSize.vs(25), alignItems: 'center'},
+  header: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginBottom: AppSize.vs(60),
+  },
 });
 
 function Register(): JSX.Element {
@@ -24,6 +30,7 @@ function Register(): JSX.Element {
 
   return (
     <SafeAreaView style={iStyles.surface}>
+      <Text style={iStyles.header}>My Wallet</Text>
       <View style={AppStyles.marginHorizontal25}>
         <TextInput
           mode="outlined"
