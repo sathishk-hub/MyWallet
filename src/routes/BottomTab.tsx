@@ -1,8 +1,10 @@
 import AppColors from '../utils/AppColors';
+import AppSize from '../utils/AppSize';
 import {ColorValue} from 'react-native';
 import Earn from '../pages/Earn';
 import Home from '../pages/Home';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Profile from '../pages/Profile'
 import React from 'react';
 import {RootStackParams} from './RootStackParams';
 import Spent from '../pages/Spent';
@@ -12,7 +14,7 @@ const Tab = createBottomTabNavigator<RootStackParams>();
 
 const Icon = ({
   name,
-  size = 28,
+  size = 30,
   color,
 }: {
   name: string;
@@ -31,6 +33,7 @@ function BottomTab() {
             Home: 'home',
             Spent: 'bank-transfer-out',
             Earn: 'bank-transfer-in',
+            Profile: 'face-man-profile',
           };
 
           return (
@@ -49,10 +52,14 @@ function BottomTab() {
           fontSize: 18,
           fontWeight: '500',
         },
+        tabBarStyle:{
+          paddingHorizontal:AppSize.hs(8)
+        }
       })}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Spent" component={Spent} />
       <Tab.Screen name="Earn" component={Earn} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 }

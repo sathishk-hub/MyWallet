@@ -104,6 +104,16 @@ function Home(): JSX.Element {
       keyboardShouldPersistTaps={'always'}
       style={{flex: 1, backgroundColor: 'white'}}>
       <StatusBar backgroundColor={'#fff'} barStyle={'dark-content'} />
+      <Text
+        style={{
+          fontSize: 26,
+          fontWeight: 'bold',
+          alignSelf: 'center',
+          marginVertical: AppSize.vs(15),
+        }}>
+        My Wallet
+      </Text>
+
       <View
         style={{
           flex: 1,
